@@ -27,27 +27,55 @@ class Anggota extends Authenticatable
 
     public function bukuBelumDikembalikan()
     {
-        return Buku::select('bukus.id_buku', 'bukus.judul_buku', 'bukus.jumlah_halaman', 'bukus.harga', 'peminjamans.tgl_pinjam')
-        ->join('peminjamans', 'bukus.id_buku', '=', 'peminjamans.id_buku')
-        ->leftJoin('pengembalians', function ($join) {
-            $join->on('peminjamans.id_buku', '=', 'pengembalians.id_buku')
-            ->on('peminjamans.no_anggota', '=', 'pengembalians.no_anggota');
-        })
+        return Buku::select(
+            'bukus.id_buku',
+            'bukus.judul_buku',
+            'bukus.jumlah_halaman',
+            'bukus.harga',
+            'peminjamans.tgl_pinjam'
+        )
+            ->join('peminjamans', 'bukus.id_buku', '=', 'peminjamans.id_buku')
+            ->leftJoin('pengembalians', function ($join) {
+                $join->on('peminjamans.id_buku', '=', 'pengembalians.id_buku')
+                ->on('peminjamans.no_anggota', '=', 'pengembalians.no_anggota');
+            })
             ->where('peminjamans.no_anggota', $this->no_anggota)
             ->whereNull('pengembalians.tgl_kembali')
+            ->groupBy(
+                'bukus.id_buku',
+                'bukus.judul_buku',
+                'bukus.jumlah_halaman',
+                'bukus.harga',
+                'peminjamans.tgl_pinjam'
+            )
             ->get();
     }
 
     public function bukuSudahDikembalikan()
     {
-        return Buku::select('bukus.judul_buku', 'bukus.jumlah_halaman', 'bukus.harga', 'peminjamans.tgl_pinjam', 'pengembalians.tgl_kembali')
+        return Buku::select(
+            'bukus.judul_buku',
+            'bukus.jumlah_halaman',
+            'bukus.harga',
+            'peminjamans.tgl_pinjam',
+            'pengembalians.tgl_kembali',
+            'pengembalians.created_at'
+        )
         ->join('peminjamans', 'bukus.id_buku', '=', 'peminjamans.id_buku')
-        ->join('pengembalians', function ($join) {
+        ->leftJoin('pengembalians', function ($join) {
             $join->on('peminjamans.id_buku', '=', 'pengembalians.id_buku')
-            ->on('peminjamans.no_anggota', '=', 'pengembalians.no_anggota');
+                ->on('peminjamans.no_anggota', '=', 'pengembalians.no_anggota');
         })
             ->where('peminjamans.no_anggota', $this->no_anggota)
             ->whereNotNull('pengembalians.tgl_kembali')
+            ->groupBy(
+                'bukus.judul_buku',
+                'bukus.jumlah_halaman',
+                'bukus.harga',
+                'peminjamans.tgl_pinjam',
+                'pengembalians.tgl_kembali',
+                'pengembalians.created_at'
+            )
             ->get();
     }
 

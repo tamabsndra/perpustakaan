@@ -14,6 +14,14 @@ class AnggotaSeeder extends Seeder
     public function run(): void
     {
         Anggota::create([
+            'no_anggota' => 'AD001',
+            'nama' => 'Admin',
+            'no_ktp' => '11110000',
+            'tgl_lahir' => '2001-12-12',
+            'tgl_bergabung' => '2024-01-01',
+        ]);
+
+        Anggota::create([
             'no_anggota' => 'AG001',
             'nama' => 'Rahmat',
             'no_ktp' => '1234567890123456',
