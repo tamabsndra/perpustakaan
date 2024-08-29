@@ -32,6 +32,7 @@
                     <a href="{{route('buku.index')}}" class="text-sm font-semibold leading-6 text-gray-900">Books</a>
                     @auth
                     @if (Auth::user()->no_anggota == 'AD001')
+                    <a href="{{route('member.index')}}" class="text-sm font-semibold leading-6 text-gray-900">Members</a>
                     <a href="{{route('buku.trace')}}" class="text-sm font-semibold leading-6 text-gray-900">Trace Books</a>
                     @else
                     <a href="{{route('buku.dipinjam')}}" class="text-sm font-semibold leading-6 text-gray-900">Your Books</a>

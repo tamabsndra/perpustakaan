@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Anggota;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\AnggotaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,6 +13,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::resource('buku', BukuController::class);
+    Route::resource('member', AnggotaController::class);
     Route::post('/borrow', [BukuController::class, 'borrow'])->name('buku.borrow');
     Route::post('/return', [BukuController::class, 'return'])->name('buku.return');
     Route::get('/my-books', [BukuController::class, 'mybook'])->name('buku.dipinjam');

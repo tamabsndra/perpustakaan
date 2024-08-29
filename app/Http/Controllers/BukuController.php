@@ -16,8 +16,7 @@ class BukuController extends Controller
     // Menampilkan daftar buku
     public function index()
     {
-        $buku = Buku::all();
-        return view('buku.index', compact('buku'));
+        return view('buku.index');
     }
 
     public function mybook()
